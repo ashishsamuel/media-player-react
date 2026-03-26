@@ -1,23 +1,99 @@
-import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Button } from "@mui/material";
+import React from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
+  const navigateByUrl = useNavigate();
   return (
     <>
-    <Container>
-      <Row>
-        <Col lg={4}>
-          <h3>Welcome to <span className='text-primary'>Media Player</span></h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus nam sint optio at numquam perspiciatis distinctio, repellendus quisquam? Unde facere eveniet sapiente. Possimus, reiciendis dolorem. Expedita assumenda vel consectetur inventore?</p>
-          <button className='btn btn-info rounded text-dark fw-bold'>Get Started</button>
-        </Col>
-        <Col lg={6}>
-          <img className='border-dark rounded' src='/images/music-player.gif' alt='music player'/>
-        </Col>
-      </Row>
+      <Container style={{height:'500px'}} className="mt-5 d-flex justify-content-center flex-wrap">
+        <Row className="mt-5 mx-5 align-items-center justify-content-between">
+          <Col lg={5}>
+            <h3>
+              Welcome to <span className="text-info">Media Player</span>
+            </h3>
+            <p>
+              Enjoy a seamless media experience with our powerful media player.
+              Easily upload, organize, and play your favorite audio and video
+              files in one place. With a user-friendly interface and smooth
+              playback controls, managing your media has never been easier.
+              Whether it's music, movies, or personal content, everything is
+              just a click away.
+            </p>
+            <Button variant="contained" className="bg-info text-dark fw-bold" onClick={()=>navigateByUrl('/home')}>
+              Get Started
+            </Button>
+          </Col>
+          <Col lg={6} className="mx-1">
+            <img
+              width="450"
+              height="250"
+              className="border-dark rounded"
+              src="/images/music-player.gif"
+              alt="music player"
+            />
+          </Col>
+        </Row>
+      </Container>
+
+      <Container className="mt-5 mx-5" style={{height:'600px'}}>
+        <h3 className="text-center">Features</h3>
+        <Row className="mt-5 align-items-center flex-wrap">
+          <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
+            <Card style={{ width: "300px" }} className="border-dark rounded">
+              <Card.Img variant="top" src="/images/upload_video.gif" />
+              <Card.Body>
+                <Card.Title>Upload Videos</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
+            <Card style={{ width: "300px" }} className="border-dark rounded">
+              <Card.Img variant="top" src="/images/upload_video.gif" />
+              <Card.Body>
+                <Card.Title>Upload Videos</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
+            <Card style={{ width: "300px" }} className="border-dark rounded">
+              <Card.Img variant="top" src="/images/upload_video.gif" />
+              <Card.Body>
+                <Card.Title>Upload Videos</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+
+      <Container className="border d-flex my-5 p-2" style={{borderRadius:'10px'}}>
+        <div className="d-flex flex-column justify-content-center flex-wrap">
+          <h3>Simple, Fast and Powerful</h3>
+          <div className="d-flex flex-column mt-4" style={{width:'700px'}}>
+            <p><span></span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident, voluptatum distinctio? Possimus nobis adipisci aliquid. Quae, impedit labore?</p>
+            <p><span></span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eligendi eaque voluptates adipisci at nostrum ea accusantium mollitia!</p>
+            <p><span></span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore corporis similique excepturi, laborum optio ratione. Officia, quas necessitatibus.</p>
+          </div>
+        </div>
+        <div>
+          <iframe width="600" height="400" src="https://www.youtube.com/embed/WOg4rHr1PyI?list=RDOIRWdkPMrh0" title="Aaromal Video Song - Sita Ramam (Malayalam) | Dulquer Salmaan | Mrunal | Vishal | Hanu Raghavapudi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
       </Container>
     </>
-  )
+  );
 }
 
-export default LandingPage
+export default LandingPage;

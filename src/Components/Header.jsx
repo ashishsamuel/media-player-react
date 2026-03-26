@@ -10,7 +10,7 @@ function Header() {
           <Navbar.Brand>
             <Link to='/' style={{textDecoration:'none'}}>
               <CloudUploadOutlinedIcon style={{color:"#000000"}}/>
-              <span className='mx-1' style={{color:"#000000"}}>React Bootstrap</span>
+              <span className='mx-1 fw-bold' style={{color:"#000000"}}>React Bootstrap</span>
             </Link>
           </Navbar.Brand>
         </Container>
