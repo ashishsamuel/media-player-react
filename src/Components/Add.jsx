@@ -8,6 +8,22 @@ function Add() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [video,setVideo] = useState({
+    id:"",
+    caption:"",
+    url:"",
+    embedlink:""
+  });
+
+  const extractEmbedLink = (e)=>{
+    console.log("event value",e.target.value);
+    const {value} = e.target;
+    const embedLink = `https://www.youtube.com/embed/${value.slice(-11)}`;
+    setVideo({...video,embedlink:embedLink})
+  }
+  
+  console.log("video data",video);
+
   return (
     <>
       <div className="d-flex align-items-center">
@@ -30,20 +46,20 @@ function Add() {
         <Modal.Body>
           <p>Please fill the following details</p>
           <Form className="border p-3 rounded">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Video ID" />
+            <Form.Group className="mb-3" controlId="formVideoId">
+              <Form.Control type="text" placeholder="Enter Video ID" onChange={(e)=>setVideo({...video,id:e.target.value})} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Video Caption" />
+            <Form.Group className="mb-3" controlId="formVideoCaption">
+              <Form.Control type="text" placeholder="Enter Video Caption" onChange={(e)=>setVideo({...video,caption:e.target.value})}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Video Image URL" />
+            <Form.Group className="mb-3" controlId="formVImageUrl">
+              <Form.Control type="text" placeholder="Enter Video Image URL" onChange={(e)=>setVideo({...video,url:e.target.value})}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Youtube Video Link" />
+            <Form.Group className="mb-3" controlId="formVideoLink">
+              <Form.Control type="text" placeholder="Enter Youtube Video Link" onChange={extractEmbedLink}/>
             </Form.Group>
           </Form>
         </Modal.Body>
