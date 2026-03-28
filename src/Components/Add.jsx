@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Button, Form, Modal } from "react-bootstrap";
+import { uploadVideo } from "../services/allServices";
 
 function Add() {
   const [show, setShow] = useState(false);
@@ -15,7 +16,7 @@ function Add() {
     embedlink:""
   });
 
-  const extractEmbedLink = (e)=>{
+  const createEmbedLink = (e)=>{
     console.log("event value",e.target.value);
     const {value} = e.target;
     const embedLink = `https://www.youtube.com/embed/${value.slice(-11)}`;
@@ -23,6 +24,10 @@ function Add() {
   }
   
   console.log("video data",video);
+
+  const uploadVideoFunction = ()=> {
+    uploadVideo(video);
+  }
 
   return (
     <>
@@ -59,7 +64,7 @@ function Add() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formVideoLink">
-              <Form.Control type="text" placeholder="Enter Youtube Video Link" onChange={extractEmbedLink}/>
+              <Form.Control type="text" placeholder="Enter Youtube Video Link" onChange={createEmbedLink}/>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -67,7 +72,7 @@ function Add() {
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="info" className="text-dark fw-bold">
+          <Button variant="info" className="text-dark fw-bold" onClick={uploadVideoFunction}>
             Upload
           </Button>
         </Modal.Footer>

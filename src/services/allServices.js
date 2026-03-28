@@ -7,6 +7,7 @@ export const uploadVideo = async (videoData) =>{
     // call post http request to localhost:4000/videos to add video in json server
     // return response to add component
 
+    console.log("video data inside upload video function",videoData);
     return await commonAPI('POST', `${serverURL}/videos`,videoData);
 }
 
