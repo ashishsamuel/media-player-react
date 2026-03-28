@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Button, Form, Modal } from "react-bootstrap";
 import { uploadVideo } from "../services/allServices";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Add() {
   const [show, setShow] = useState(false);
@@ -17,16 +18,23 @@ function Add() {
   });
 
   const createEmbedLink = (e)=>{
-    console.log("event value",e.target.value);
     const {value} = e.target;
     const embedLink = `https://www.youtube.com/embed/${value.slice(-11)}`;
     setVideo({...video,embedlink:embedLink})
   }
   
-  console.log("video data",video);
 
-  const uploadVideoFunction = ()=> {
-    uploadVideo(video);
+  const uploadVideoFunction = async ()=> {
+    const {id,caption,url,embedlink} = video;
+    if(!id || !caption || !url || !embedlink){
+      toast.error("Please fill the form completely")
+    } else {
+      const response = await uploadVideo(video);
+      if(response?.data){
+        handleClose();
+        toast.success("Video has been uploaded succesfully")
+      }
+    }
   }
 
   return (
@@ -77,6 +85,7 @@ function Add() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer/>
     </>
   );
 }
