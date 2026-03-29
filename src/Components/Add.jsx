@@ -30,7 +30,7 @@ function Add({handleRes}) {
       toast.error("Please fill the form completely")
     } else {
       const response = await uploadVideo(video);
-      if(response?.status>200 && response?.status<300){
+      if(response?.status>=200 && response?.status<=300){
         handleRes(response.data);
         handleClose();
         toast.success("Video has been uploaded succesfully")

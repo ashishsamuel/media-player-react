@@ -6,8 +6,6 @@ import { serverURL } from "./serverURL"
 export const uploadVideo = async (videoData) =>{
     // call post http request to localhost:4000/videos to add video in json server
     // return response to add component
-
-    console.log("video data inside upload video function",videoData);
     return await commonAPI('POST', `${serverURL}/videos`,videoData);
 }
 
@@ -28,5 +26,5 @@ export const getSingleVideo = async (id)=>{
 // delete single video service
 export const deleteSingleVideo = async(id)=> {
     // call delete http request to localhost:4000/videos/id to delete the details of a single video from the json server and it is being called from the videocard component and return response to it 
-    return await commonAPI('DELETE',`${serverURL}/videos/${id}`,'');
+    return await commonAPI('DELETE',`${serverURL}/videos/${id}`,{});
 }
