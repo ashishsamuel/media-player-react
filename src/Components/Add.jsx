@@ -4,7 +4,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { uploadVideo } from "../services/allServices";
 import { ToastContainer, toast } from 'react-toastify';
 
-function Add() {
+function Add({handleRes}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -30,9 +30,12 @@ function Add() {
       toast.error("Please fill the form completely")
     } else {
       const response = await uploadVideo(video);
-      if(response?.data){
+      if(response?.status>200 && response?.status<300){
+        handleRes(response.data);
         handleClose();
         toast.success("Video has been uploaded succesfully")
+      } else {
+        toast.error("Please provide unique Id for uploading the video");  
       }
     }
   }
