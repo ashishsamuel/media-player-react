@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { addCategory, deleteSingleCategory, fetchAllCategories } from '../services/allServices';
+import { addCategory, deleteSingleCategory, fetchAllCategories, getSingleVideo, updateCategory } from '../services/allServices';
 import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -50,13 +50,40 @@ function Category() {
     }
   }
 
+  const dragOver = (e)=>{
+    e.preventDefault();
+    console.log("draggin over the category");
+  }
+
+  const handleDrop = async(e,categoryId)=>{
+    console.log("dropping event",categoryId);
+    let sourceVideoId = e.dataTransfer.getData("videoId");
+    console.log("source Videoid",sourceVideoId);
+    // logic for adding video to that category
+    const {data} = await getSingleVideo(sourceVideoId);
+    console.log("data of the source video", data);
+
+    let selectedCategory = categoryList.find((item)=> item.id ===categoryId);
+    selectedCategory.allVideos.push(data);
+    console.log("selectedCategory",selectedCategory);
+
+    const response = await updateCategory(categoryId,selectedCategory);
+    if(response?.status>=200 && response?.status<300){
+      toast.success(`${data.caption} has been added successfuly to the ${selectedCategory.categoryName}`)
+      fetchAllCategoriesFunction();
+    } else {
+      toast.error("Something error occured");
+    }
+  }
+
   useEffect(()=>{
     fetchAllCategoriesFunction();
   },[])
   return (
     <>
     { categoryList?.length>0 ? categoryList.map((category)=>(
-      <div className='d-flex justify-content-between'>
+      <div className='d-flex justify-content-between'
+      onDragOver={(e)=>{dragOver(e)}} onDrop={(e)=>{handleDrop(e,category?.id)}}>
         <p className='mt-2'>{category.categoryName}</p>
         <Button variant="container" onClick={()=>deleteCategory(category?.id)}>
           <DeleteIcon/>

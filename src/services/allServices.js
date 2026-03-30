@@ -64,3 +64,8 @@ export const deleteWatchHistory = async(id) => {
     // call delete request to localhost:4000/history/${id} to delete the watch history using the id
     return await commonAPI('DELETE',`${serverURL}/history/${id}`,{});
 }
+
+// update allvideos array in category api
+export const updateCategory = async(categoryId,body)=> {
+    return await commonAPI('PUT',`${serverURL}/categories/${categoryId}`,body)
+}
