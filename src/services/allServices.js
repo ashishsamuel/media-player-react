@@ -28,3 +28,9 @@ export const deleteSingleVideo = async(id)=> {
     // call delete http request to localhost:4000/videos/id to delete the details of a single video from the json server and it is being called from the videocard component and return response to it 
     return await commonAPI('DELETE',`${serverURL}/videos/${id}`,{});
 }
+
+// add category 
+export const addCategory = async(data) =>{
+    // call post request to loclahost:4800/categories to add new category from the category component and return response to it 
+    return await commonAPI('POST',`${serverURL}/categories`,data);
+}

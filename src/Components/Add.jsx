@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Button, Form, Modal } from "react-bootstrap";
 import { uploadVideo } from "../services/allServices";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function Add({handleRes}) {
   const [show, setShow] = useState(false);
@@ -33,7 +33,7 @@ function Add({handleRes}) {
       if(response?.status>=200 && response?.status<=300){
         handleRes(response.data);
         handleClose();
-        toast.success("Video has been uploaded succesfully")
+        toast.success("Video has been uploaded succesfully");
       } else {
         toast.error("Please provide unique Id for uploading the video");  
       }
@@ -88,7 +88,6 @@ function Add({handleRes}) {
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer/>
     </>
   );
 }

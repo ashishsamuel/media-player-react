@@ -5,6 +5,7 @@ import LandingPage from './Pages/LandingPage';
 import WatchHistory from './Pages/WatchHistory';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       </Routes>
       <hr/>
       <Footer/>
+      <ToastContainer/>
     </div>
   );
 }
