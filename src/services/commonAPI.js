@@ -10,7 +10,6 @@ export const commonAPI = async(httpMethod, url, reqBody) => {
     };
 
     return await axios(requestConfig).then((result)=>{
-        console.log("result",result);        
         return result;
     }).catch((err)=>{
         return err;

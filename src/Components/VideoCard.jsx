@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Modal } from 'react-bootstrap'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteSingleVideo } from '../services/allServices';
+import { deleteSingleVideo, getSingleVideo, postWatchHistory } from '../services/allServices';
 import { toast } from 'react-toastify';
 
 
@@ -10,19 +10,33 @@ function VideoCard({video,updateDeleteStatus}) {
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // console.log("video data coming", video);
+  const [watchHistory,setWatchHistory] = useState({
+    id: "",
+    caption: "",
+    videoUrl: "",
+    timeStamp: ""
+  })
 
   const deleteVideo = async(videoId)=> {
     const response = await deleteSingleVideo(videoId);
     if(response?.status>=200 && response?.status<=300){
       toast.success("Video has been deleted succesfully");
       updateDeleteStatus();
-      console.log("response", response);
     }  
   }
 
-  const openVideo = async(video)=>{}
+  const openVideo = async(video)=>{    
+    const response = await getSingleVideo(video.id);
+    if(response.status>=200 && response.status<300){
+      handleShow();
+      
+      const responseWatch = await postWatchHistory({
+        caption: video.caption,
+        videoUrl: video.embedlink,
+        timeStamp: new Date().toLocaleDateString()
+      });
+    }
+  }
     
   return (
     <>

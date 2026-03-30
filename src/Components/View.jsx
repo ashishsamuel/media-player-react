@@ -15,7 +15,6 @@ function View({serverResponse}) {
     setDeleteStatus(false);
     const fetchAllVideos = async () => {
       const response = await getAllVideos();
-      console.log("response from fetch all videos api", response);
       setAllVideos(response?.data);
     };
 

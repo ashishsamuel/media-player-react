@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-import { addCategory } from '../services/allServices';
+import { addCategory, deleteSingleCategory, fetchAllCategories } from '../services/allServices';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Category() {
   const [show, setShow] = useState(false);
@@ -10,34 +11,63 @@ function Category() {
     categoryName:"",
     allVideos:[]
   });
+  const [categoryList, setCategoryList] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const addNewCategory = async()=>{
     const {id, categoryName} = categoryData;
-    console.log("category data",categoryData);
     
     if(!id || !categoryName){
       toast.info("Please fill all the details !")
     } else {
         const response = await addCategory(categoryData);
       if(response?.status >=200 && response.status <300){
-        console.log("response from add category service",response);
         handleClose();
         toast.success("Category has been added successfully");
+        fetchAllCategoriesFunction();
       } else {
         toast.error("Please provide unique id for adding category");
       }
     }
-    
-    
   }
+
+  const fetchAllCategoriesFunction = async()=>{
+    const response = await fetchAllCategories();
+    if(response?.status>=200){
+      setCategoryList(response?.data);
+    }
+  }
+
+  const deleteCategory = async(id)=> {
+    const response = await deleteSingleCategory(id);
+    if(response?.status>=200 && response?.status<300){
+      toast.success("Category deleted successfully");
+      fetchAllCategoriesFunction();
+    } else {
+      toast.error("error occured");
+    }
+  }
+
+  useEffect(()=>{
+    fetchAllCategoriesFunction();
+  },[])
   return (
     <>
-    <div className="d-grid">
+    { categoryList?.length>0 ? categoryList.map((category)=>(
+      <div className='d-flex justify-content-between'>
+        <p className='mt-2'>{category.categoryName}</p>
+        <Button variant="container" onClick={()=>deleteCategory(category?.id)}>
+          <DeleteIcon/>
+        </Button>
+      </div>
+    )): <div> No Categories to display </div>}
+    <div className="d-grid my-2">
       <Button onClick={handleShow} className='btn btn-info text-dark fw-bold border rounded' variant="info">Add new Category</Button>
     </div>
+
+    
 
     <Modal
         show={show}

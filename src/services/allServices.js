@@ -20,7 +20,7 @@ export const getAllVideos = async () =>{
 export const getSingleVideo = async (id)=>{
     // call get http request to localhost:4000/videos/id to get the details of that single video in the json server from video card component
     // return response to video card
-    return await commonAPI('GET',`${serverURL}/videos/${id}`,'');
+    return await commonAPI('GET',`${serverURL}/videos/${id}`,{});
 }
 
 // delete single video service
@@ -33,4 +33,34 @@ export const deleteSingleVideo = async(id)=> {
 export const addCategory = async(data) =>{
     // call post request to loclahost:4800/categories to add new category from the category component and return response to it 
     return await commonAPI('POST',`${serverURL}/categories`,data);
+}
+
+// fetch all categories
+export const fetchAllCategories = async()=> {
+    // call get request to localhost:4000/categories to get all the categories from the category component and return response to it
+    return await commonAPI('GET',`${serverURL}/categories`,{});
+}
+
+// delete single category 
+export const deleteSingleCategory = async(id)=>{
+    // call delete request to localhost:4000/categories/id to delete a category from the category list from the category component and return response to it 
+    return await commonAPI('DELETE', `${serverURL}/categories/${id}`,{});
+}
+
+// watch-history post api
+export const postWatchHistory = async(videoData)=> {
+    // call post request to localhost:4000/history to insert the watched video by clicking on the image inside the videocard    
+    return await commonAPI('POST',`${serverURL}/history`,videoData);
+}
+
+// watch history details fetch api
+export const fetchAllWatchHistory = async() =>{
+    // call get request to localhost:4000/history to fetch all the watch history on watch history component loading time itself
+    return await commonAPI('GET',`${serverURL}/history`,{})
+}
+
+// delete watch history api
+export const deleteWatchHistory = async(id) => {
+    // call delete request to localhost:4000/history/${id} to delete the watch history using the id
+    return await commonAPI('DELETE',`${serverURL}/history/${id}`,{});
 }
