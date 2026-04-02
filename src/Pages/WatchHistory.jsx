@@ -54,7 +54,7 @@ function WatchHistory() {
             <tr>
           <td>{index+1}</td>
           <td>{data?.caption}</td>
-          <td>{data?.videoUrl}</td>
+          <td><a style={{textDecoration:'none'}} target='_blank' href={data?.videoUrl}>{data?.videoUrl}</a></td>
           <td>{data?.timeStamp}</td>
           <td><Button variant="container" onClick={()=>deleteSingleWatchHistory(data?.id)}>
           <DeleteIcon/>

@@ -13,27 +13,24 @@ function Home() {
 
   return (
     <>
-      <div className="container title d-flex align-items-center justify-content-between mt-5 mb-5">
-        <div className="add">
-          <Add handleRes={handleRes} />
-        </div>
-        <Link
-          style={{ textDecoration: "none" }}
-          className="text-light fs-5"
+      <Row className="container-fluid align-items-center my-5 justify-content-center">
+          <Col lg={9}><Add handleRes={handleRes} /></Col>
+          <Col lg={2} className="d-flex justify-content-end"><Link
+          style={{ textDecoration: "none", color: '#ffffff' }}
+          className="fs-5"
           to={"/watch-history"}
         >
           Watch History
-        </Link>
-      </div>
+        </Link></Col>                  
+      </Row>
 
-      <Row className="container m-5 justify-content-between">
+      <Row className="container-fluid my-5 justify-content-center">
         <Col lg={8} className="allvideos">
-          <h3>All Videos</h3>
+          <h3 className="fs-5">All Videos</h3>
           <div className="videos">
             <View serverResponse={serverResponse} />
           </div>
         </Col>
-        <Col></Col>
 
         <Col lg={3} className="category">
           <Category />

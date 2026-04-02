@@ -18,7 +18,15 @@ function App() {
       </Routes>
       <hr/>
       <Footer/>
-      <ToastContainer/>
+      <ToastContainer
+      position="top-right"
+  autoClose={2000}
+  hideProgressBar={false}
+  newestOnTop
+  closeOnClick
+  pauseOnHover
+  draggable
+  theme="dark"/>
     </div>
   );
 }

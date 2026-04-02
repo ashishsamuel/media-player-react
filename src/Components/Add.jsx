@@ -43,7 +43,7 @@ function Add({handleRes}) {
   return (
     <>
       <div className="d-flex align-items-center">
-        <h3 className="mt-2 me-2">Upload New Video</h3>
+        <h3 className="mt-2 me-2 fs-5">Upload New Video</h3>
         <Button onClick={handleShow} variant="contained">
           <AddCircleIcon />
         </Button>

@@ -41,8 +41,8 @@ function LandingPage() {
         <h3 className="text-center">Features</h3>
         <Row className="mt-5 align-items-center flex-wrap">
           <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
-            <Card style={{ width: "300px" }} className="border-dark rounded">
-              <Card.Img variant="top" src="/images/upload_video.gif" />
+            <Card style={{ width: "300px", height:"400px" }} className="border-dark rounded">
+              <Card.Img variant="top" height="230px" src="/images/upload_video.gif" />
               <Card.Body>
                 <Card.Title>Upload Videos</Card.Title>
                 <Card.Text>
@@ -53,10 +53,10 @@ function LandingPage() {
             </Card>
           </Col>
           <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
-            <Card style={{ width: "300px" }} className="border-dark rounded">
-              <Card.Img variant="top" src="/images/upload_video.gif" />
+            <Card style={{ width: "300px", height:"400px" }} className="border-dark rounded">
+              <Card.Img variant="top" height="230px" src="/images/play_video.gif" />
               <Card.Body>
-                <Card.Title>Upload Videos</Card.Title>
+                <Card.Title>Play Videos</Card.Title>
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -65,10 +65,10 @@ function LandingPage() {
             </Card>
           </Col>
           <Col lg={4} className="text-center d-flex justify-content-center align-items-center">
-            <Card style={{ width: "300px" }} className="border-dark rounded">
-              <Card.Img variant="top" src="/images/upload_video.gif" />
+            <Card style={{ width: "300px", height:"400px" }} className="border-dark rounded">
+              <Card.Img variant="top" height="230px" src="/images/drag_drop.gif" />
               <Card.Body>
-                <Card.Title>Upload Videos</Card.Title>
+                <Card.Title>Drag & Drop Videos</Card.Title>
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -79,14 +79,14 @@ function LandingPage() {
         </Row>
       </Container>
 
-      <Container className="border d-flex my-5 p-2" style={{borderRadius:'10px'}}>
+      <Container className="d-flex my-5 p-2">
         <div className="d-flex flex-column justify-content-center flex-wrap">
           <h3>Simple, Fast and Powerful</h3>
           <div className="d-flex flex-column mt-4" style={{width:'700px'}}>
-            <p><span></span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident, voluptatum distinctio? Possimus nobis adipisci aliquid. Quae, impedit labore?</p>
-            <p><span></span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eligendi eaque voluptates adipisci at nostrum ea accusantium mollitia!</p>
-            <p><span></span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore corporis similique excepturi, laborum optio ratione. Officia, quas necessitatibus.</p>
-          </div>
+            <p>Upload your personal videos quickly and manage them in one place and watch videos directly within the application without interruptions.</p>
+            <p>Track all the videos you have watched in real-time and create custom categories to organize your videos efficiently.</p>
+            <p>Move videos between categories using intuitive drag-and-drop and experience a fast-loading and smooth user interface.</p>
+         </div>
         </div>
         <div>
           <iframe width="600" height="400" src="https://www.youtube.com/embed/WOg4rHr1PyI?list=RDOIRWdkPMrh0" title="Aaromal Video Song - Sita Ramam (Malayalam) | Dulquer Salmaan | Mrunal | Vishal | Hanu Raghavapudi" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

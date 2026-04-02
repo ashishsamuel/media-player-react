@@ -6,6 +6,7 @@ import {
   getSingleVideo,
   postWatchHistory,
 } from "../services/allServices";
+import './VideoCard.css'
 import { toast } from "react-toastify";
 
 function VideoCard({ video, updateDeleteStatus }) {
@@ -70,15 +71,15 @@ function VideoCard({ video, updateDeleteStatus }) {
         show={show}
         onHide={handleClose}
         backdrop="static"
-        keyboard={false}
+        keyboard={false} className="video-display"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Video Caption</Modal.Title>
+          <Modal.Title>{video.caption}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <iframe
             width={"100%"}
-            height="200"
+            height="300"
             src={`${video.embedlink}?autoplay=1&mute=1`}
             title={video.caption}
             frameborder="0"
