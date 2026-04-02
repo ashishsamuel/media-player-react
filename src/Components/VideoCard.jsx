@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, Modal } from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -13,12 +13,6 @@ function VideoCard({ video, updateDeleteStatus }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [watchHistory, setWatchHistory] = useState({
-    id: "",
-    caption: "",
-    videoUrl: "",
-    timeStamp: "",
-  });
 
   const deleteVideo = async (videoId) => {
     const response = await deleteSingleVideo(videoId);
@@ -33,7 +27,7 @@ function VideoCard({ video, updateDeleteStatus }) {
     if (response.status >= 200 && response.status < 300) {
       handleShow();
 
-      const responseWatch = await postWatchHistory({
+      await postWatchHistory({
         caption: video.caption,
         videoUrl: video.embedlink,
         timeStamp: new Date().toLocaleDateString(),

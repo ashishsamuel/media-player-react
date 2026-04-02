@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Button, Table } from 'react-bootstrap';
-import { commonAPI } from '../services/commonAPI';
 import { deleteWatchHistory, fetchAllWatchHistory } from '../services/allServices';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
