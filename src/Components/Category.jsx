@@ -64,9 +64,16 @@ function Category() {
     console.log("data of the source video", data);
 
     let selectedCategory = categoryList.find((item)=> item.id ===categoryId);
-    selectedCategory.allVideos.push(data);
-    console.log("selectedCategory",selectedCategory);
-
+    const videoPresentFlag = selectedCategory.allVideos.some((selectedvideo)=>{
+      return selectedvideo.id===data.id
+    })
+    console.log("video present flag",videoPresentFlag);
+    
+    if(videoPresentFlag){
+      toast.error("Already this video has been added to the category before");
+    } else {
+      console.log("selectedCategory",selectedCategory);
+selectedCategory.allVideos.push(data);
     const response = await updateCategory(categoryId,selectedCategory);
     if(response?.status>=200 && response?.status<300){
       toast.success(`${data.caption} has been added successfuly to the ${selectedCategory.categoryName}`)
@@ -74,6 +81,8 @@ function Category() {
     } else {
       toast.error("Something error occured");
     }
+    }
+    
   }
 
   useEffect(()=>{
