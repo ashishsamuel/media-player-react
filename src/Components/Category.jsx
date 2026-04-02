@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
-import { addCategory, deleteSingleCategory, fetchAllCategories, getSingleVideo, updateCategory } from '../services/allServices';
-import { toast } from 'react-toastify';
-import DeleteIcon from '@mui/icons-material/Delete';
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Form, Modal, Row } from "react-bootstrap";
+import {
+  addCategory,
+  deleteSingleCategory,
+  fetchAllCategories,
+  getSingleVideo,
+  updateCategory,
+} from "../services/allServices";
+import { toast } from "react-toastify";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Category() {
   const [show, setShow] = useState(false);
   const [categoryData, setCategoryData] = useState({
-    id:"",
-    categoryName:"",
-    allVideos:[]
+    id: "",
+    categoryName: "",
+    allVideos: [],
   });
   const [categoryList, setCategoryList] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const addNewCategory = async()=>{
-    const {id, categoryName} = categoryData;
-    
-    if(!id || !categoryName){
-      toast.info("Please fill all the details !")
+  const addNewCategory = async () => {
+    const { id, categoryName } = categoryData;
+
+    if (!id || !categoryName) {
+      toast.info("Please fill all the details !");
     } else {
-        const response = await addCategory(categoryData);
-      if(response?.status >=200 && response.status <300){
+      const response = await addCategory(categoryData);
+      if (response?.status >= 200 && response.status < 300) {
         handleClose();
         toast.success("Category has been added successfully");
         fetchAllCategoriesFunction();
@@ -31,81 +37,144 @@ function Category() {
         toast.error("Please provide unique id for adding category");
       }
     }
-  }
+  };
 
-  const fetchAllCategoriesFunction = async()=>{
+  const fetchAllCategoriesFunction = async () => {
     const response = await fetchAllCategories();
-    if(response?.status>=200){
+    if (response?.status >= 200) {
       setCategoryList(response?.data);
     }
-  }
+  };
 
-  const deleteCategory = async(id)=> {
+  const deleteCategory = async (id) => {
     const response = await deleteSingleCategory(id);
-    if(response?.status>=200 && response?.status<300){
+    if (response?.status >= 200 && response?.status < 300) {
       toast.success("Category deleted successfully");
       fetchAllCategoriesFunction();
     } else {
       toast.error("error occured");
     }
-  }
+  };
 
-  const dragOver = (e)=>{
+  const dragOver = (e) => {
     e.preventDefault();
-    console.log("draggin over the category");
-  }
+    // console.log("draggin over the category");
+  };
 
-  const handleDrop = async(e,categoryId)=>{
-    console.log("dropping event",categoryId);
+  const handleDrop = async (e, categoryId) => {
+    // console.log("dropping event", categoryId);
     let sourceVideoId = e.dataTransfer.getData("videoId");
-    console.log("source Videoid",sourceVideoId);
+    // console.log("source Videoid", sourceVideoId);
     // logic for adding video to that category
-    const {data} = await getSingleVideo(sourceVideoId);
-    console.log("data of the source video", data);
+    const { data } = await getSingleVideo(sourceVideoId);
+    // console.log("data of the source video", data);
 
-    let selectedCategory = categoryList.find((item)=> item.id ===categoryId);
-    const videoPresentFlag = selectedCategory.allVideos.some((selectedvideo)=>{
-      return selectedvideo.id===data.id
-    })
-    console.log("video present flag",videoPresentFlag);
-    
-    if(videoPresentFlag){
+    let selectedCategory = categoryList.find((item) => item.id === categoryId);
+    const videoPresentFlag = selectedCategory.allVideos.some(
+      (selectedvideo) => {
+        return selectedvideo.id === data.id;
+      },
+    );
+    // console.log("video present flag", videoPresentFlag);
+
+    if (videoPresentFlag) {
       toast.error("Already this video has been added to the category before");
     } else {
-      console.log("selectedCategory",selectedCategory);
-selectedCategory.allVideos.push(data);
-    const response = await updateCategory(categoryId,selectedCategory);
-    if(response?.status>=200 && response?.status<300){
-      toast.success(`${data.caption} has been added successfuly to the ${selectedCategory.categoryName}`)
-      fetchAllCategoriesFunction();
-    } else {
-      toast.error("Something error occured");
+      // console.log("selectedCategory", selectedCategory);
+      selectedCategory.allVideos.push(data);
+      const response = await updateCategory(categoryId, selectedCategory);
+      if (response?.status >= 200 && response?.status < 300) {
+        toast.success(
+          `${data.caption} has been added successfuly to the ${selectedCategory.categoryName}`,
+        );
+        fetchAllCategoriesFunction();
+      } else {
+        toast.error("Something error occured");
+      }
     }
-    }
+  };
+
+  const deleteVideoFromCategory = async (videoDetails,category)=> {
+    // console.log("category.allVideos.filter(video=>video.id!==videoDetails.id)",category.allVideos.filter(video=>video.id!==videoDetails.id));
     
+    category.allVideos = category.allVideos.filter(video=>video.id!==videoDetails.id);
+    const response = await updateCategory(category?.id,category);
+    if(response?.status>=200 && response?.status<300){
+      fetchAllCategoriesFunction();
+      toast.success(`${videoDetails?.caption} has removed from the category ${category?.categoryName}`)
+    }    
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllCategoriesFunction();
-  },[])
+  }, []);
   return (
     <>
-    { categoryList?.length>0 ? categoryList.map((category)=>(
-      <div className='d-flex justify-content-between'
-      onDragOver={(e)=>{dragOver(e)}} onDrop={(e)=>{handleDrop(e,category?.id)}}>
-        <p className='mt-2'>{category.categoryName}</p>
-        <Button variant="container" onClick={()=>deleteCategory(category?.id)}>
-          <DeleteIcon/>
+      {categoryList?.length > 0 ? (
+        categoryList.map((category) => (
+          <div
+            className="d-flex flex-column justify-content-between"
+            onDragOver={(e) => {
+              dragOver(e);
+            }}
+            onDrop={(e) => {
+              handleDrop(e, category?.id);
+            }}
+          >
+            <div className="d-flex justify-content-between">
+            <p className="mt-2">{category.categoryName}</p>
+            <Button
+              variant="container"
+              onClick={() => deleteCategory(category?.id)}
+            >
+              <DeleteIcon />
+            </Button>
+            </div>
+            <Row>
+              {category?.allVideos.length > 0 &&
+                category?.allVideos.map((video) => (
+                  <Col sm={12}>
+                    <Card
+                      className="my-3"
+                      style={{ height: "350px" }}
+                    >
+                      <Card.Img
+                        className="w-100"
+                        height="250px"
+                        style={{ cursor: "pointer" }}
+                        variant="top"
+                        src={video?.url}
+                      />
+                      <Card.Body className="d-flex align-items-center justify-content-between">
+                        <Card.Title className="mt-2 fs-6">
+                          {video?.caption}
+                        </Card.Title>
+                        <Button
+                          variant="container" onClick={()=>deleteVideoFromCategory(video,category)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
+          </div>
+        ))
+      ) : (
+        <div> No Categories to display </div>
+      )}
+      <div className="d-grid my-2">
+        <Button
+          onClick={handleShow}
+          className="btn btn-info text-dark fw-bold border rounded"
+          variant="info"
+        >
+          Add new Category
         </Button>
       </div>
-    )): <div> No Categories to display </div>}
-    <div className="d-grid my-2">
-      <Button onClick={handleShow} className='btn btn-info text-dark fw-bold border rounded' variant="info">Add new Category</Button>
-    </div>
 
-    
-
-    <Modal
+      <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -117,26 +186,45 @@ selectedCategory.allVideos.push(data);
         <Modal.Body>
           <p>Please fill the following details</p>
           <Form>
-      <Form.Group className="mb-3" controlId="formCategoryId">
-        <Form.Control type="text" placeholder="Enter Category Id" onChange={(e)=>{setCategoryData({...categoryData,id:e.target.value})}}/>
-      </Form.Group>
+            <Form.Group className="mb-3" controlId="formCategoryId">
+              <Form.Control
+                type="text"
+                placeholder="Enter Category Id"
+                onChange={(e) => {
+                  setCategoryData({ ...categoryData, id: e.target.value });
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formCategoryName">
-        <Form.Control type="text" placeholder="Enter Category Name" onChange={(e)=>{setCategoryData({...categoryData,categoryName:e.target.value})}}/>
-      </Form.Group>
-
-
-    </Form>
+            <Form.Group className="mb-3" controlId="formCategoryName">
+              <Form.Control
+                type="text"
+                placeholder="Enter Category Name"
+                onChange={(e) => {
+                  setCategoryData({
+                    ...categoryData,
+                    categoryName: e.target.value,
+                  });
+                }}
+              />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="info" className='text-dark fw-bold' onClick={addNewCategory}>Add</Button>
+          <Button
+            variant="info"
+            className="text-dark fw-bold"
+            onClick={addNewCategory}
+          >
+            Add
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }
 
-export default Category
+export default Category;
